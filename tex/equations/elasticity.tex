@@ -1,0 +1,126 @@
+\section{Elasticity}
+
+As $\Omega_T$ is at equilibrium state, the equation of motions becomes the
+following equilibrium equation :
+\begin{equation}
+  \label{eq:equilibrium}
+  \nabla\cdot\bbar{\sigma} + \bff = 0
+\end{equation}
+
+where :
+\begin{itemize}
+  \item $\bbar{\sigma}$ is the stress tensor
+  \item $\bar{f}$ represents the volume forces applied on $\Omega$
+\end{itemize}
+
+The quantity we focus on is the displacement vector $\bu$, which doesn't appear
+in the equilibrium equation (\ref{eq:equilibrium}). \\
+We have to introduce the tensor of small deformations $\bbar{\varepsilon}$ :
+\begin{equation}
+\label{eq:small-deformation}
+\bbar{\varepsilon} = \frac{1}{2}(\nabla \bu + \nabla \bu^T)
+\end{equation}
+And the Hooke's law allows to link stress tensor $\bbar{\sigma}$ with tensor of
+small deformation $\bbar{\varepsilon}$ :
+\begin{equation}
+  \label{eq:hooke}
+  \bbar{\sigma}(\bbar{\varepsilon}) = \frac{E}{1+\nu} \left(\bbar{\varepsilon}
+  + \frac{\nu}{1-2\nu} Tr(\bbar{\varepsilon}) I \right)
+\end{equation}
+where :
+\begin{itemize}
+ \item $E$ is Young modulus
+ \item $\nu$ is Poisson's ratio
+ \item $I$ is the identity tensor
+\end{itemize}
+We introduce the $\lambda$ and $\mu$ the Lamé coefficients :
+\begin{equation*}
+  \lambda=\frac{E\nu}{(1+\nu)(1-2\nu)}
+  \quad\quad\text{ and }\quad\quad
+  \mu=\frac{E}{2(1+\nu)}
+\end{equation*}
+which allow us to rewrite (\ref{eq:hooke}) as:
+\begin{equation*}
+  \bbar{\sigma}(\bbar{\varepsilon}
+  = 2\mu\bbar{\varepsilon} + \lambda Tr(\bbar{\varepsilon})I
+\end{equation*}
+For simplicity, we'll omit the dependance in the follwing.\\
+
+We need to complete the system with some boundary conditions:
+\begin{empheq}[left=\empheqlbrace]{alignat=2}
+  \bu &= \bu_D &&\quad \text{ on } \partial\Omega_D \label{eq:ela-bc-1} \\
+  \bbar{\sigma}\cdot\bn &= \bg
+  &&\quad \text{ on }\partial\Omega_P \label{eq-ela-bc-2}
+\end{empheq}
+where $\partial\Omega=\partial\Omega_D\cup\partial\Omega_P$.
+
+\subsection{Variational formulation}
+The variational formulation consists in finding $\bu$ in $X$ such that:
+\begin{alignat}{2}
+  \int_\Omega \bbar{\sigma}:\nabla\bm{\varphi}
+  - \int_{\partial\Omega} \bbar{\sigma}\cdot\bn\cdot\bm{\varphi}
+  & = - \int_\Omega \bff\cdot\bm{\varphi}
+  && \quad \forall \bm{\varphi} \in X \label{eq:ela-vf}
+\end{alignat}
+
+We now need to make appear the displacement vector $\bu$ thanks to the Hooke's
+law (\ref{eq:hooke}) in the first component of (\ref{eq:ela-vf}):
+\begin{equation}
+  \int_\Omega \bbar{\sigma}:\nabla\bm{\varphi}
+  = 2\mu \int_\Omega \bbar{\varepsilon}:\nabla\bm{\varphi}
+  + \lambda \int_\Omega Tr(\bbar{\varepsilon})I:\nabla\bm{\varphi}
+\end{equation}
+We have the following identities:
+\begin{equation}
+  Tr(\bbar{\varepsilon}) = \nabla\cdot\bu,
+  \quad I:\nabla\bm{\varphi} = \nabla\cdot\bm{\varphi},
+  \quad \bbar{\varepsilon}:\nabla\bm{\varphi} = \bbar{\varepsilon}:\bbar{s}
+  \quad\text{with}\quad
+  \bbar{s} = \frac{1}{2}(\nabla\bm{\varphi}+\nabla\bm{\varphi}^T)
+\end{equation}
+Which gives us the formulation:
+\begin{equation}
+  2\mu \int_\Omega \bbar{\sigma}:\bbar{s}
+  + \lambda \int_\Omega (\nabla\cdot\bu)(\nabla\cdot\bm{\varphi})
+  - \int_{\partial\Omega} \bbar{\sigma}\cdot\bn\cdot\bm{\varphi}
+  = - \int_\Omega \bff\cdot\bm{\varphi}
+  \quad \forall \bm{\varphi} \in X \label{eq:ela-vf-displa}
+\end{equation}
+
+Imposing the boundary conditions (\ref{eq:ela-bc-1}) in a strong form leads to
+finding $\bu\in H^1_{\bu_D,\Omega_D}(\Omega)$ such that:
+\begin{alignat}{2}
+  2\mu \int_\Omega \bbar{\varepsilon}:\bbar{s}
+  + \lambda \int_\Omega (\nabla\cdot\bu)(\nabla\cdot\bm{\varphi})
+  & = - \int_\Omega \bff\cdot\bm{\varphi}
+  + \int_{\partial\Omega_P} \bg\cdot\bm{\varphi}
+  && \quad \forall \bm{\varphi} \in H^1_{0,\Omega_D}(\Omega)
+  \label{eq:ela-vf-strong}
+\end{alignat}
+
+We also can impose the boundary condition (\ref{eq:ela-bc-1}) in a weak way by
+adding penalty and consistance terms, giving us the following formulation:
+Find $\bu\in H^1(\Omega)$ such that:
+\begin{alignat}{2}
+  2\mu \int_\Omega \bbar{\varepsilon}:\bbar{s}
+  + \lambda \int_\Omega (\nabla\cdot\bu)(\nabla\cdot\bm{\varphi})
+  + \int_{\partial \Omega_D} \frac{\gamma}{h_s} \bu \cdot \bm{\varphi}
+  &&& \nonumber \\
+  - \int_{\partial \Omega_D}
+  (\bbar{\sigma}(\bbar{\varepsilon}) \cdot \bn) \cdot \bm{\varphi}
+  - \int_{\partial \Omega_D} (\bbar{\sigma}(\bbar{s}) \cdot \bn) \cdot \bu
+  &= - \int_\Omega \bff\cdot\bm{\varphi}
+  + \int_{\partial\Omega_P} \bg\cdot\bm{\varphi}
+  && \quad \forall \bm{\varphi}\in H^1(\Omega) \label{eq:ela-vf-weak} \\
+  & + \int_{\partial \Omega_D} \frac{\gamma}{h_s} \bu_D \cdot \bm{\varphi}
+  - \int_{\partial \Omega_D} (\bbar{\sigma}(\bbar{s}) \cdot \bn) \cdot \bu_D
+  \nonumber
+\end{alignat}
+
+\subsection{Thermal dilation}
+
+
+
+
+
+.

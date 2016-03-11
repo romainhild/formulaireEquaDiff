@@ -1,0 +1,280 @@
+\chapter{Reminders}
+
+\section{Operators}
+All scalar functions are noted as regular letter, as $f$, all vector field are
+noted as bold letter, as $\mathbf{f}=(f_1,\dots,f_d)$, and tensor field with two
+bars upon them, as $\overline{\overline{f}}=(f_{ij})_{i,j=1,\dots,d}$.\\
+The space variable can be written $\mathbf{x}=(x_1,\dots,x_d)=(x,y,z)$.
+
+\begin{itemize}
+\item
+  Scalar product of two vectorial fields:
+  \begin{equation*}
+    \mathbf{u}\cdot\mathbf{v} = \sum_{i=1}^d u_i v_i
+  \end{equation*}
+\item
+  Scalar product of two tensor fields:
+  \begin{equation*}
+    \overline{\overline{m}}:\overline{\overline{n}} =
+    tr(\overline{\overline{m}}*\overline{\overline{n}}^T)
+  \end{equation*}
+  where $tr$ is the trace of the tensor, and $\overline{\overline{n}}^T$ is the
+  transpose of the tensor.
+\item
+  Gradient of a scalar field:
+  \begin{equation*}
+    \nabla f =
+    \begin{pmatrix}
+      \frac{\partial f}{\partial x_1}
+      & \dots
+      & \frac{\partial f}{\partial x_d}
+    \end{pmatrix}
+  \end{equation*}
+\item
+  Gradient of a vectorial field:
+  \begin{equation*}
+    \nabla \mathbf{f} =
+    \begin{pmatrix}
+      \frac{\partial f_1}{\partial x_1} &
+      \dots &
+      \frac{\partial f_1}{\partial x_d} \\
+      \vdots & \ddots & \vdots \\
+      \frac{\partial f_d}{\partial x_1} &
+      \dots &
+      \frac{\partial f_d}{\partial x_d}
+    \end{pmatrix}
+  \end{equation*}
+\item
+  Divergence of a vectorial field:
+  \begin{equation*}
+    \nabla\cdot\mathbf{f} =
+    \sum_{i=1}^d \frac{\partial f_i}{\partial x_i}
+  \end{equation*}
+\item
+  Curl of a vectorial field:
+  \begin{equation*}
+    \nabla\times\mathbf{f} =
+    \begin{pmatrix}
+      \frac{\partial f_3}{\partial x_2} - \frac{\partial f_2}{\partial x_3} \\
+      \frac{\partial f_1}{\partial x_3} - \frac{\partial f_3}{\partial x_1} \\
+      \frac{\partial f_2}{\partial x_1} - \frac{\partial f_1}{\partial x_2}
+    \end{pmatrix}
+  \end{equation*}
+  In 2D, we only keep the last component as a scalar field.
+\item
+  Laplacian of a scalar field:
+  \begin{equation*}
+    \Delta f = \nabla\cdot\nabla f =
+    \sum_{i=1}^d \frac{\partial^2 f}{\partial x_i^2}
+  \end{equation*}
+\item
+  Laplacian of a vectorial field:
+  \begin{equation*}
+    \Delta \mathbf{f} =
+    \begin{pmatrix}
+      \Delta f_1 \\ \vdots \\ \Delta f_d
+    \end{pmatrix} =
+    \begin{pmatrix}
+      \sum_{i=1}^d \frac{\partial^2 f_1}{\partial x_i^2}\\
+      \vdots \\
+      \sum_{i=1}^d \frac{\partial^2 f_d}{\partial x_i^2}
+    \end{pmatrix}
+  \end{equation*}
+\item
+  Directional derivatives along a vector $\mathbf{v}$ of a scalar field $f$:
+  \begin{equation*}
+    (\mathbf{v}\cdot\nabla)f =
+    \sum_{i=1}^d v_i\frac{\partial f}{\partial x_i}
+  \end{equation*}
+\item
+  Directional derivatives along a vector $\mathbf{v}$ of a vectorial field
+  $\mathbf{u}$:
+  \begin{equation*}
+    (\mathbf{v}\cdot\nabla)\mathbf{u} =
+    \begin{pmatrix}
+      (\mathbf{v}\cdot\nabla)u_1 \\
+      \vdots \\
+      (\mathbf{v}\cdot\nabla)u_d
+    \end{pmatrix} =
+    \begin{pmatrix}
+      \sum_{i=1}^d v_i\frac{\partial u_1}{\partial x_i} \\
+      \vdots \\
+      \sum_{i=1}^d v_i\frac{\partial u_d}{\partial x_i}
+    \end{pmatrix}
+  \end{equation*}
+\end{itemize}
+
+\section{Vectorial identities}
+\subsection{Addition and Multiplication}
+\begin{itemize}
+\item
+  $\mathbf{A}+\mathbf{B}=\mathbf{B}+\mathbf{A}$
+\item
+  $\mathbf{A}\cdot\mathbf{B}=\mathbf{B}\cdot\mathbf{A}$
+\item
+  $\mathbf{A}\times\mathbf{B}=\mathbf{-B}\times\mathbf{A}$
+\item
+  $\left(\mathbf{A}+\mathbf{B}\right)\cdot\mathbf{C}=
+  \mathbf{A}\cdot\mathbf{C}+\mathbf{B}\cdot\mathbf{C}$
+\item
+  $\left(\mathbf{A}+\mathbf{B}\right)\times\mathbf{C}=
+  \mathbf{A}\times\mathbf{C}+\mathbf{B}\times\mathbf{C}$
+\item
+  $\mathbf{A}\cdot\left(\mathbf{B}\times\mathbf{C}\right)=
+  \mathbf{B}\cdot\left(\mathbf{C}\times\mathbf{A}\right)=
+  \mathbf{C}\cdot\left(\mathbf{A}\times\mathbf{B}\right)$
+\item
+  $\mathbf{A}\times\left(\mathbf{B}\times\mathbf{C}\right)=
+  \left(\mathbf{A}\cdot\mathbf{C}\right)\mathbf{B}
+  -\left(\mathbf{A}\cdot\mathbf{B}\right)\mathbf{C}$
+\item
+  $\left(\mathbf{A}\times\mathbf{B}\right)\times\mathbf{C}=
+  \left(\mathbf{A}\cdot\mathbf{C}\right)\mathbf{B}
+  -\left(\mathbf{B}\cdot\mathbf{C}\right)\mathbf{A}$
+\item
+  $\left(\mathbf{A}\times\mathbf{B}\right)
+  \cdot\left(\mathbf{C}\times\mathbf{D}\right)=
+  \left(\mathbf{A}\cdot\mathbf{C}\right)\left(\mathbf{B}\cdot\mathbf{D}\right)
+  -\left(\mathbf{B}\cdot\mathbf{C}\right)\left(\mathbf{A}\cdot\mathbf{D}\right)$
+\item
+  $\left(\mathbf{A}\cdot\left(\mathbf{B}\times\mathbf{C}\right)\right)\mathbf{D}
+  =\left(\mathbf{A}\cdot\mathbf{D}\right)\left(\mathbf{B}\times\mathbf{C}\right)
+  +\left(\mathbf{B}\cdot\mathbf{D}\right)\left(\mathbf{C}\times\mathbf{A}\right)
+  +\left(\mathbf{C}\cdot\mathbf{D}\right)\left(\mathbf{A}\times\mathbf{B}\right)
+  $
+\item
+  $\left(\mathbf{A}\times\mathbf{B}\right)
+  \times\left(\mathbf{C}\times\mathbf{D}\right)
+  =\left(\mathbf{A}\cdot\left(\mathbf{B}\times\mathbf{D}\right)\right)\mathbf{C}
+  -\left(\mathbf{A}\cdot\left(\mathbf{B}\times\mathbf{C}\right)\right)\mathbf{D}
+  $
+\end{itemize}
+
+\subsection{Differentiation}
+\subsubsection{Gradient}
+\begin{itemize}
+\item
+  $\nabla(\psi+\phi)=\nabla\psi+\nabla\phi $
+\item
+  $\nabla (\psi \, \phi) = \phi \,\nabla \psi  + \psi \,\nabla \phi $
+\item
+  $\nabla\left(\mathbf{A}\cdot\mathbf{B}\right)=
+  \left(\mathbf{A}\cdot\nabla\right)\mathbf{B}
+  +\left(\mathbf{B}\cdot\nabla\right)\mathbf{A}
+  +\mathbf{A}\times\left(\nabla\times\mathbf{B}\right)
+  +\mathbf{B}\times\left(\nabla\times\mathbf{A}\right) $
+\end{itemize}
+
+\subsubsection{Divergence}
+\begin{itemize}
+\item
+  $\nabla\cdot(\mathbf{A}+\mathbf{B})=
+  \nabla\cdot\mathbf{A}+\nabla\cdot\mathbf{B}$
+\item
+  $\nabla\cdot\left(\psi\mathbf{A}\right)=
+  \psi\nabla\cdot\mathbf{A}+\mathbf{A}\cdot\nabla \psi $
+\item
+  $\nabla\cdot\left(\mathbf{A}\times\mathbf{B}\right)=
+  \mathbf{B}\cdot(\nabla\times\mathbf{A})
+  -\mathbf{A}\cdot(\nabla\times\mathbf{B})$
+\end{itemize}
+
+\subsubsection{Curl}
+\begin{itemize}
+\item
+  $\nabla\times(\mathbf{A}+\mathbf{B})=
+  \nabla\times\mathbf{A}+\nabla\times\mathbf{B} $
+\item
+  $\nabla\times\left(\psi\mathbf{A}\right)=
+  \psi\nabla\times\mathbf{A}+\nabla\psi\times\mathbf{A}$
+\item
+  $\nabla\times\left(\mathbf{A}\times\mathbf{B}\right)=
+  \mathbf{A}\left(\nabla\cdot\mathbf{B}\right)
+  -\mathbf{B}\left(\nabla\cdot\mathbf{A}\right)
+  +\left(\mathbf{B}\cdot\nabla\right)\mathbf{A}
+  -\left(\mathbf{A}\cdot\nabla\right)\mathbf{B} $
+\end{itemize}
+
+\subsubsection{Second derivatives}
+\begin{itemize}
+\item
+  $\nabla\cdot(\nabla\times\mathbf{A})=0 $
+\item
+  $\nabla\times(\nabla\psi)= \mathbf{0} $
+\item
+  $\nabla\cdot(\nabla\psi)=\nabla^{2}\psi $
+\item
+  $\nabla\left(\nabla\cdot\mathbf{A}\right)
+  -\nabla\times\left(\nabla\times\mathbf{A}\right)=\nabla^{2}\mathbf{A} $
+\item
+  $\nabla\cdot(\phi\nabla\psi)=\phi\nabla^{2}\psi + \nabla\phi\cdot\nabla\psi $
+\item
+  $\psi\nabla^2\phi-\phi\nabla^2\psi=
+  \nabla\cdot\left(\psi\nabla\phi-\phi\nabla\psi\right)$
+\item
+  $\nabla^2(\phi\psi)=
+  \phi\nabla^2\psi+2\nabla\phi\cdot\nabla\psi+\psi\nabla^2\phi$
+\item
+  $\nabla^2(\psi\mathbf{A})=
+  \mathbf{A}\nabla^2\psi+2(\nabla\psi\cdot\nabla)\mathbf{A}
+  +\psi\nabla^2\mathbf{A}$
+\item
+  $\nabla^2(\mathbf{A}\cdot\mathbf{B})=
+  \mathbf{A}\cdot\nabla^2\mathbf{B} - \mathbf{B}\cdot\nabla^2\mathbf{A}
+  + 2\nabla\cdot((\mathbf{B}\cdot\nabla)\mathbf{A}
+  + \mathbf{B}\times\nabla\times\mathbf{A})$
+\end{itemize}
+
+\subsubsection{Third derivatives}
+\begin{itemize}
+\item
+  $\nabla^{2}(\nabla\psi) = \nabla(\nabla\cdot(\nabla\psi))
+  = \nabla(\nabla^{2}\psi)$
+\item
+  $\nabla^{2}(\nabla\cdot\mathbf{A})
+  =\nabla\cdot(\nabla(\nabla\cdot\mathbf{A}))=\nabla\cdot(\nabla^{2}\mathbf{A})$
+\item
+  $\nabla^{2}(\nabla\times\mathbf{A}) =
+  -\nabla\times(\nabla\times(\nabla\times\mathbf{A}))
+  = \nabla\times(\nabla^{2}\mathbf{A})$
+\end{itemize}
+
+\subsection{Integration}
+\subsubsection{Surface–volume integrals}
+In the following surface–volume integral theorems, $V$ denotes a 3d volume with
+a corresponding 2d boundary $S = \partial V$. And
+$\mathbf{A}\cdot d\mathbf{S}=\mathbf{A}\cdot\mathbf{n}\, dS$.
+\begin{itemize}
+\item
+  $\int_{\partial V} \mathbf{A}\cdot d\mathbf{S}=
+  \int_V \left(\nabla\cdot\mathbf{A}\right)dV$ (Divergence theorem)
+\item
+  $\int_{\partial V}\psi d \mathbf{S} = \int_V \nabla \psi\, dV$
+\item
+  $\int_{\partial V}\left(\hat{\mathbf{n}}\times\mathbf{A}\right)dS=
+  \int _{V}\left(\nabla\times\mathbf{A}\right)dV$
+\item
+  $\int_{\partial V}\psi\left(\nabla\varphi\cdot\hat{\mathbf{n}}\right)dS =
+  \int _{V}\left(\psi\nabla^{2}\varphi+\nabla\varphi\cdot\nabla\psi\right)dV$
+  (Green's first identity)
+\item
+  $\int_{\partial V}\left[\left(\psi\nabla\varphi
+  -\varphi\nabla\psi\right)\cdot\hat{\mathbf{n}}\right]dS=
+  \int_{\partial V}\left[\psi\frac{\partial\varphi}{\partial n}
+    -\varphi\frac{\partial\psi}{\partial n}\right]dS
+  =\int_{V}\left(\psi\nabla^{2}\varphi-\varphi\nabla^{2}\psi\right)dV$
+  (Green's second identity)
+\end{itemize}
+
+\subsubsection{Curve–surface integrals}
+In the following curve–surface integral theorems, $S$ denotes a 2d open surface
+with a corresponding 1d boundary $C = \partial S$:
+\begin{itemize}
+\item
+  $\int_{\partial S}\mathbf{A}\cdot d\boldsymbol{\ell}=
+  \int_{S}\left(\nabla\times\mathbf{A}\right)\cdot d\mathbf{S}$
+  (Stokes' theorem)
+\item
+  $\int_{\partial S}\psi d\boldsymbol{\ell}
+  =\int_{S}\left(\hat{\mathbf{n}}\times\nabla\psi\right)dS$
+\end{itemize}

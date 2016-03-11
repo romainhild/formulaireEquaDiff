@@ -1,0 +1,347 @@
+\section{Maxwell}
+The Maxwell's equations describe the generation of electric and magnetic fields
+by currents, etablishing relations between the electric and magnetic fields
+(resp. $\bE$ and $\bH$), the electric and magnetic flux (resp. $\bD$ and $\bB$),
+the current density $\bj$ and the electric charge $\rho$. They are then
+essential in the study of high field magnets.
+\begin{alignat}{2}
+  \nabla \times \bE &= -\frac{\partial \bB}{\partial t}
+  &&\quad\text{(Faraday)} \label{eq:faraday} \\
+  \nabla \times \bH &= \bj +\frac{\partial \bD}{\partial t}
+  &&\quad\text{(Maxwell-Ampère)} \label{eq:maxwell-ampere} \\
+  \nabla \cdot \bB &= 0
+  &&\quad\text{(Gauss magnetic law)} \label{eq:gauss_magnetic_law} \\
+  \nabla \cdot \bD &= \rho
+  &&\quad\text{(Gauss electric law)} \label{eq:gauss_electric_law}
+\end{alignat}
+In static case, the time derivatives are obviously not considered. \\
+
+These equations have to be completed with the following constitutive laws,
+linking $\bB$ to $\bH$ and $\bD$ to $\bE$ from material properties.
+\begin{equation}
+  \label{eq:constitutive-laws}
+  \bB = \mu \bH, \quad \bD = \varepsilon \bE, \quad \bj = \bj_s + \sigma \bE
+\end{equation}
+where $\mu$ is the magnetic permeability, $\varepsilon$ the electric permitivity
+and $\bj_s$ the current source density. \\
+
+The Gauss's magnetic law in (\ref{eq:gauss_magnetic_law}) leads to the existence
+of a vectorial magnetic potential $\bA$
+\begin{equation}
+  \label{eq:magnetic-potential}
+  \nabla\cdot\bB=0 \Rightarrow\exists\bA\text{ such that }\bB = \nabla\times\bA
+\end{equation}
+
+Combining Maxwell Ampère's equation (\ref{eq:maxwell-ampere}) with the
+previously introduced constitutive laws (\ref{eq:constitutive-laws}), we have
+\begin{equation}
+  \nabla \times \bH = \bj
+    ~\overset{ {\scriptstyle \bB = \mu \bH} }{ \Longrightarrow }
+    ~\nabla \times \left( \frac{1}{\mu} \bB \right) = \bj
+    ~\overset{ {\scriptstyle\bB = \nabla \times \bA} }{ \Longrightarrow }
+    ~\nabla \times \left( \frac{1}{\mu} \nabla \times \bA \right) = \bj
+\end{equation}
+
+For magnetostatic problem, the independence on time removes the temporal partial
+derivatives of (\ref{eq:faraday}-\ref{eq:maxwell-ampere}). Then, combining the
+Maxwell-Ampère equation with (\ref{eq:constitutive-laws}) and
+(\ref{eq:magnetic-potential}) gives the potential based magnetostatic problem
+\begin{equation}
+  \label{eq:static-potential}
+  \nabla \times \left( \frac{1}{\mu} \nabla \times \bA \right) = \bj
+\end{equation}
+
+We consider here the classical boundary condition for magnetostatic, which
+impose the tangential component of magnetic potential on the boundary that reads
+\begin{equation}
+  \label{eq:boundary-cond}
+  \bA \times \mathbf{n} = \bA_D ~\text{on} ~\partial \Omega
+\end{equation}
+where $\mathbf{n}$ is the outward unit normal on $\partial \Omega$.
+Classically $\bA_D$ is set to zero. \\
+
+The problem (\ref{eq:static-potential}) has not a unique solution. Indeed, if
+$\bA$ is solution of (\ref{eq:static-potential}),
+$\bar{\bA} = \bA + \nabla \phi$ is solution for any $\phi$ since the curl of a
+gradient field is always zero. We shall even so remark that the gradient field
+$\nabla \phi$ doesn't affect the magnetic flux $B$ which is the classical
+quantity of interest. \\
+
+Nevertheless, the unicity of the solution is essential for the numerical solving.
+
+The first way to guarantee the solution unicity consists in adding a condition
+on the divergence, using a gauge. The use of the Coulomb gauge
+$\nabla\cdot\bA=0$ adds a divergence-free condition, and the unique solution is
+obtained by solving a saddle point problem. A second way consists in considering
+the ungauged magnetostatic problem (\ref{eq:static-potential}) as a special case
+of the potential based full maxwell problem in frequency domain.
+
+\subsection{Saddle-point formulation}
+\label{sec:saddle-mawxell}
+The add of the Coulomb gauge (divergence-free condition) to the potential based
+magnetostatic problem (\ref{eq:static-potential}) is managed by a scalar
+Lagrange multiplier $p$, giving the following problem to solve
+\begin{alignat}{2}
+  \nabla \times \left( \frac{1}{\mu} \nabla \times \bA \right) + \nabla p
+  &= \bj &&\text{ on } \Omega\\
+  \nabla \cdot A &= 0 &&\text{ on } \Omega \\
+  \bA \times \bn &= \bA_D &&\text{ on } \partial \Omega \label{eq:saddle-bc} \\
+  p &= 0 &&\text{ on } \partial \Omega
+\end{alignat}
+
+\subsubsection{Variational formulation}
+The variational formulation the consists in finding
+$(\bA,p)\in(X\subset H_{\mathrm{curl}}(\Omega) \times H^1_0(\Omega))$ such that
+\begin{alignat}{2}
+  \int_{\Omega}\frac{1}{\mu}(\nabla \times \bA) \cdot (\nabla \times \bv)
+  + \int_{\partial\Omega}\frac{1}{\mu}
+  (\nabla\times\bA)\cdot(\bv\times\mathbf{n})
+  + \int_{\Omega} \bv \cdot \nabla p &= \int_{\Omega} \bj \cdot \bv
+  &&\quad\forall \bv \in X \label{eq:vf-saddle-point-1} \\
+  \int_{\Omega} \bA \cdot \nabla q &= 0
+  &&\quad\forall q \in H^1_0(\Omega) \label{eq:vf-saddle-point-2}
+\end{alignat}
+
+The Dirichlet boundary condition (\ref{eq:saddle-bc}) on $\bA$ imposed on strong
+form vanishes the boundary term of (\ref{eq:vf-saddle-point-1}) and the
+condition is directly taken into account in the definition of the function space
+\[
+X = H_{\bA_D,\mathrm{curl}}(\Omega)
+= \{ v\in H_{\mathrm{curl}}(\Omega)
+\mid v\times\mathbf{n}=\bA_D\text{ on }\partial\Omega\}
+\]
+The variational formulation then consists in finding
+$(\bA,p) \in ( H_{\bA_D,\mathrm{curl}}(\Omega) \times H^1_0(\Omega))$ such that
+\begin{alignat}{2}
+\int_{\Omega}\frac{1}{\mu}(\nabla \times \bA) \cdot (\nabla \times \bv)
++ \int_{\partial \Omega}\frac{1}{\mu} (\nabla \times \bA) \cdot A_D
++ \int_{\Omega} \bv \cdot \nabla p &= \int_{\Omega} \bj \cdot \bv
+&&\quad\forall \bv \in X \label{eq:vf-saddle-strong-1} \\
+\int_{\Omega} \bA \cdot \nabla q &= 0
+&&\quad\forall q \in H^1_0(\Omega) \nonumber%\label{eq:vf-saddle-strong-2}
+\end{alignat}
+
+We can also impose (\ref{eq:saddle-bc}) on weak form, adding symetrization and
+penalisation terms and then avoiding to add condition in $X$ function space,
+i.e. $X = H_{\mathrm{curl}}(\Omega)$. We denote $\gamma$ the penalisation
+coefficient, and $h_s$ the mesh size. The variational formulation then consists
+in finding $(\bA,p) \in ( H_{\mathrm{curl}}(\Omega) \times H^1_0(\Omega))$ such
+that
+\begin{alignat}{2}
+  \int_{\Omega}\frac{1}{\mu}(\nabla \times \bA) \cdot (\nabla \times \bv)
+  + \int_{\Omega} \bv \cdot \nabla p
+  +\int_{\partial\Omega}\frac{\gamma}{h_s}\frac{1}{\mu}
+  (\bv \times \bn) \cdot (\bA \times \bn)
+  &&& \nonumber \\
+  +\int_{\partial\Omega}\frac{1}{\mu}(\nabla\times\bA)\cdot(\bv\times\bn)
+  +\int_{\partial\Omega}\frac{1}{\mu}(\nabla\times\bv)\cdot(\bA\times\bn)
+  & = \int_{\Omega} \bj \cdot \bv
+  + \int_{\partial \Omega}\frac{1}{\mu} (\nabla \times \bv) \cdot \bA_D
+  &&\quad \forall \bv \in X \label{eq:vf-saddle-weak-1} \\
+  &   + \int_{\partial\Omega}\frac{\gamma}{h_s}
+  \frac{1}{\mu}(\bv\times\bn)\cdot \bA_D
+  && \nonumber \\
+  \int_{\Omega} \bA \cdot \nabla q &= 0
+  &&\quad\forall q \in H^1_0(\Omega) \nonumber%\label{eq:vf-saddle-weak-2}
+\end{alignat}
+
+\subsubsection{Discretization}
+The vectorial magnetic potential $\bA$ is approximated using Nédélec finite
+elements of lowest order, and the scalar multiplier $p$ is approximated with
+Lagrange finite elements of order $k$. We denote by $V_h \subset X $ and
+$Q_h \subset H^1_0(\Omega)$ the associated finite elements spaces, respectively.
+Considering $\{ \psi_j \}_{j=1}^{n}$ (resp. $\{ \phi_j \}_{i=1}^{m}$) the finite
+elements basis functions of $V_h$ (resp. $Q_h$), the discrete approximations
+$\bA_h$ of $\bA$ and $p_h$ of $p$ reads
+\begin{equation}
+  \label{eq:saddle-discretization}
+  \bA_h = \sum \limits_{j=1}^{n} a_j \psi_j \qquad \text{and} \qquad p_h = \sum \limits_{i=1}^{n} p_i \phi_i
+\end{equation}
+
+Replacing $\bA$ and $p$ by their discretizations \ref{eq:saddle-discretization}
+in the variational formulations (\ref{eq:vf-saddle-strong-1}) or
+(\ref{eq:vf-saddle-weak-1}), the discrete magnetostatic saddle-point formulation
+yields on the form
+\begin{equation}
+  \label{eq:saddle-matricial}
+  \begin{pmatrix}
+    \mathcal{A} & \mathcal{B}^{T} \\
+    \mathcal{B} & 0 \\
+  \end{pmatrix}
+  \begin{pmatrix}
+    \bA \\
+    p \\
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+    \mathbf{f} \\
+    0 \\
+  \end{pmatrix}
+\end{equation}
+
+If (\ref{eq:saddle-bc}) is imposed on the strong form as in
+(\ref{eq:vf-saddle-strong-1}), the matrix $\mathcal{A}$ reads
+\begin{equation}
+  \label{eq:saddle-A-strong}
+  \mathcal{A}_{i,j} = \int_{\Omega} \frac{1}{\mu}
+  (\nabla \times \psi_j) \cdot (\nabla \times \psi_i)
+\end{equation}
+The enforcement of (\ref{eq:saddle-bc}) on weak form
+(\ref{eq:vf-saddle-weak-1}) adds symetrization and penalisation in
+$\mathcal{A}$ which then reads
+\begin{equation}
+  \label{eq:saddle-A-weak}
+  \mathcal{A}_{i,j} = \int_{\Omega} \frac{1}{\mu} (\nabla \times \psi_j)
+  \cdot (\nabla \times \psi_i)
+  + \int_{\partial \Omega} \frac{1}{\mu} (\nabla \times \psi_j)
+  \cdot (\psi_i \times \bn)
+  + \int_{\partial \Omega} \frac{1}{\mu} (\nabla \times \psi_i)
+  \cdot (\psi_j \times \bn)
+  + \int_{\partial \Omega} \frac{1}{\mu} \frac{\gamma}{h_s} (\psi_j \times \bn)
+  \cdot (\psi_i \times \bn)
+\end{equation}
+
+The matrix $\mathcal{B}$ of (\ref{eq:saddle-matricial}) reads
+\begin{equation}
+  \label{eq:saddle-point-B}
+  \mathcal{B}_{i,j} = \int_{\Omega} \psi_j \cdot \nabla \phi_i
+\end{equation}
+and the right hand side vector $\mathbf{f}$ is the discretization of the source
+term $\bj$ to which symetrization and penalisation terms can be added
+\begin{equation}
+  \mathbf{f}_i = \displaystyle{ \int_{\Omega} \bj \cdot \psi_i }
+  + \int_{\partial \Omega} \frac{1}{\mu} (\nabla \psi_i) \cdot \bA_D
+  + \int_{\partial \Omega} \frac{1}{\mu}
+  \frac{\gamma}{h_s} (\psi_i \times \bn) \cdot \bA_D
+\end{equation}
+
+\subsection{Regularized formulation}
+\label{sec:regul-maxwell}
+We consider here the Maxwell's equations
+(\ref{eq:faraday}-\ref{eq:gauss_electric_law}) given on their full formulation
+(with time derivatives), which can describe all electromagnetic phenomena.
+
+The time dependency of these equation can be removed using a time Fourier
+transform
+\begin{equation}
+  \label{eq:fourier-transform}
+  \mathcal{F}[f(t)](\omega) : f(t) \longrightarrow \mathcal{F}[f(t)](\omega)
+  = \int_{-\infty}^{+\infty} f(t) e^{-iwt} dt
+\end{equation}
+
+The ungauged magnetostatic problem (\ref{eq:static-potential}) is a special case
+of the time harmonic Maxwell's equations with $\omega = 0$. The full maxwell
+problem expressed in frequency domain is regular for all $\omega > 0$, and then
+has a unique solution. The idea to regularized the magnetostatic problem
+(\ref{eq:static-potential}) is based on the consideration that the
+electromagnetic fields obtained at low frequencies are a good approximation of
+magnetostatics fields.
+
+From Maxwell-Ampère equation (\ref{eq:maxwell-ampere}) in
+(\ref{eq:static-potential}) and (\ref{eq:constitutive-laws}), we can deduce
+\begin{equation}
+  \label{eq:maxwell-ampere-reg}
+  \nabla \times \left( \frac{1}{\mu} \nabla \times \bA \right)
+  = \bj_s + \sigma \bE + \epsilon \frac{\partial \bE}{\partial t}
+\end{equation}
+And from Faraday's law in (\ref{eq:static-potential}), we have :
+\begin{equation}
+  \label{eq:faraday-reg}
+  \nabla \times \bE = -\frac{\partial (\nabla \times \bA) }{\partial t}
+  ~\Rightarrow ~\bE = -\frac{\partial \bA}{\partial t}
+\end{equation}
+
+Combining (\ref{eq:maxwell-ampere-reg}) and (\ref{eq:faraday-reg}), we deduce
+\begin{equation}
+  \label{eq:time-potential}
+  \nabla \times \left( \frac{1}{\mu} \nabla \times \bA \right)
+  + \epsilon \frac{\partial^2 \bA}{\partial t^2}
+  + \sigma \frac{\partial \bA}{\partial t}
+  = \bj_s
+\end{equation}
+
+The Fourier transform of the derivative terms of (\ref{eq:time-potential}) are
+obtained combining (\ref{eq:fourier-transform}) with a simple integration by
+parts, leading to a multiplication with $i \omega$
+\begin{equation*}
+  \mathcal{F}[\frac{\partial \bA}{\partial t}](\omega)
+  = i \omega \mathcal{F}[A](\omega)
+\end{equation*}
+
+We can then deduce the time harmonic equation
+\begin{equation}
+  \label{eq:time-harmonic}
+  \nabla \times \left( \frac{1}{\mu} \nabla \times \bA \right)
+  + (\sigma i \omega - \epsilon \omega^2) \bA = \bj_s
+\end{equation}
+
+Our operator for magnetostatic equation (\ref{eq:static-potential}) can then be
+"regularized" adding to it a multiple of magnetic potential $\bA$, mimicking the
+last term $(\sigma i \omega - \epsilon\omega^2) \bA$ of (\ref{eq:time-harmonic})
+\begin{equation}
+  \label{eq:regular-static-potential}
+  \nabla \times \left( \frac{1}{\mu} \nabla \times \bA_{\epsilon} \right)
+  + \alpha \bA_{\epsilon} = \bj
+\end{equation}
+The solution $\bA_{\epsilon}$ of the regularized problem
+(\ref{eq:regular-static-potential}) converges to the solution $\bA$ of the
+initial problem (\ref{eq:static-potential}) for $\epsilon \longrightarrow 0$,
+and we can show that
+\begin{equation}
+  \label{eq:bounds-reg}
+  \parallel \bA_{\epsilon} \parallel_{L_2}
+  \leqslant \frac{1}{\epsilon} \parallel \bj \parallel_{L_2}
+  \quad
+  \text{and}
+  \quad
+  \exists c ~\text{such that}
+  ~\parallel \bA - \bA_{\epsilon} \parallel_{H_{curl}}
+  \leqslant c \parallel \bj \parallel_{L_2}
+\end{equation}
+
+\subsubsection{Variational formulation}
+The variational formulation obtained from (\ref{eq:regular-static-potential})
+consists in finding $\bA \in X \subset H_{\mathrm{curl}}(\Omega)$ such that
+\begin{alignat}{2}
+  \label{eq:vf-regul}
+  \int_{\Omega}\frac{1}{\mu}(\nabla \times \bA) \cdot (\nabla \times \bv)
+  + \int_{\partial \Omega}\frac{1}{\mu} (\nabla\times\bA) \cdot (\bv\times\bn )
+  + \int_{\Omega}\alpha \bA \cdot \bv  &= \int_{\Omega} \bj \cdot \bv
+  &&\quad \forall \bv \in X
+\end{alignat}
+which $X$ to be determined. \\
+
+If the Dirichlet boundary condition (\ref{eq:boundary-cond}) on $A$ is impose on
+strong form, it removes the boundary term of (\ref{eq:vf-regul})
+and the condition is inherent to the function space
+$X = H_{\bA_D,\mathrm{curl}}(\Omega)$. The variational formulation becomes :\\
+Find $\bA \in H_{\bA_D,\mathrm{curl}}(\Omega)$ such that
+\begin{alignat}{2}
+  \label{eq:vf-regul-strong}
+  \int_{\Omega}\frac{1}{\mu}(\nabla \times \bA) \cdot (\nabla \times \bv)
+  + \int_{\Omega}\alpha \bA \cdot \bv  &= \int_{\Omega} \bj \cdot \bv
+  && \quad \forall \bv \in H_{0,\mathrm{curl}}(\Omega)
+\end{alignat}
+
+We can also impose the Dirichlet boundary conditions on weak form, adding
+symetrization and penalisation terms and then avoiding to add condition in $X$
+function space, i.e. $X = H_{\mathrm{curl}}(\Omega)$. As previously, $\gamma$ is
+the penalisation coefficient and $h_s$ the mesh size. The variational
+formulation consists then in finding $\bA \in H_{\mathrm{curl}}(\Omega)$ such
+that
+\begin{alignat}{2}
+  \int_{\Omega}\frac{1}{\mu}(\nabla \times \bA) \cdot (\nabla \times \bv)
+  + \int_{\Omega}\alpha \bA \cdot \bv
+  + \int_{\partial \Omega} \frac{\gamma}{h_s} \frac{1}{\mu}
+  (\bv \times \bn ) \cdot (\bA \times \bn ) &&& \nonumber \\
+  + \int_{\partial \Omega}\frac{1}{\mu} (\nabla \times \bA) \cdot (\bv\times\bn)
+  + \int_{\partial \Omega}\frac{1}{\mu} (\nabla \times \bv) \cdot (\bA\times\bn)
+  &=
+  \int_{\Omega} \bj \cdot \bv
+  + \int_{\partial \Omega}\frac{1}{\mu} (\nabla \times \bv) \cdot \bA_D
+  && \quad \forall \bv \in H_{\mathrm{curl}}(\Omega) \label{eq:vf-regul-weak} \\
+  & + \int_{\partial\Omega} \frac{\gamma}{h_s} \frac{1}{\mu}
+  (\bv \times \bn) \cdot \bA_D \nonumber
+\end{alignat}
+
+\subsection{Hybrid formulation}
