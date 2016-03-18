@@ -41,7 +41,7 @@ We introduce the $\lambda$ and $\mu$ the Lamé coefficients :
 \end{equation*}
 which allow us to rewrite (\ref{eq:hooke}) as:
 \begin{equation*}
-  \bbar{\sigma}(\bbar{\varepsilon}
+  \bbar{\sigma}(\bbar{\varepsilon})
   = 2\mu\bbar{\varepsilon} + \lambda Tr(\bbar{\varepsilon})I
 \end{equation*}
 For simplicity, we'll omit the dependance in the follwing.\\
@@ -80,7 +80,7 @@ We have the following identities:
 \end{equation}
 Which gives us the formulation:
 \begin{equation}
-  2\mu \int_\Omega \bbar{\sigma}:\bbar{s}
+  2\mu \int_\Omega \bbar{\varepsilon}:\bbar{s}
   + \lambda \int_\Omega (\nabla\cdot\bu)(\nabla\cdot\bm{\varphi})
   - \int_{\partial\Omega} \bbar{\sigma}\cdot\bn\cdot\bm{\varphi}
   = - \int_\Omega \bff\cdot\bm{\varphi}
@@ -118,9 +118,26 @@ Find $\bu\in H^1(\Omega)$ such that:
 \end{alignat}
 
 \subsection{Thermal dilation}
+We can add a thermal dilatation term to the stress tensor $\bbar{\sigma}$:
+\begin{equation}
+  \bbar{\sigma}(\bbar{\varepsilon})
+  = \bbar{\sigma}_E(\bbar{\varepsilon}) + \bbar{\sigma}_T
+  = 2\mu\bbar{\varepsilon} + \lambda Tr(\bbar{\varepsilon})I
+  - \frac{E}{1-2\nu}\alpha(T-T_0)I
+\end{equation}
 
-
-
-
-
-.
+In the case where we impose the Dirichlet conditions in a strong way, we need to
+add the following term to the right hand side:
+\begin{equation}
+  \int_\Omega \frac{E\alpha}{1-2\nu}(T-T_0)\nabla\cdot\bm{\varphi}
+\end{equation}
+And for the weak form of the Dirichlet conditions, add the previous term and the
+following to the right hand side:
+\begin{equation}
+  -\int_{\partial\Omega_D} \bbar{\sigma}_T\cdot\bn\cdot\bu_D
+\end{equation}
+as the two following terms to the matrix:
+\begin{equation}
+  -\int_{\partial\Omega_D} \bbar{\sigma}_T\cdot\bn\cdot\bm{\varphi}
+  -\int_{\partial\Omega_D} \bbar{\sigma}_T\cdot\bn\cdot\bu
+\end{equation}
