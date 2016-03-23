@@ -89,6 +89,105 @@ Then, the equations to solve are:
 \subsubsection{Hybrid formulation}
 
 \subsection{Resolution strategy}
+The current is imposed by a difference of potential, but it would be more
+consistent with the experiment to give a current density as a target and
+update the Dirichlet boundary conditions to approach the current.\\
+In the following, this option is
 \subsubsection{Linear}
+\algsetup{indent=2em}
+\begin{algorithm}[H]
+  \caption{Linear Resolution}
+  \label{algo:et-linear}
+  \begin{algorithmic}
+    \REQUIRE $T^0$, $V^0$, $\varepsilon_I$, $N_{max}$
+    \ENSURE $I$
+    \STATE $e_I=0$
+    \STATE $V_0=V^0$
+    \STATE $i=0$
+    \vspace{0.3cm}
+    \REPEAT
+      \STATE $V_{i+1} =$ \textbf{solveV}($V_i,T^0$)
+      \IF{$I$}
+        \STATE $e_I =$ \textbf{updateBC}($V_{i+1},I$)
+      \ENDIF
+      \STATE $i = i+1$
+    \UNTIL{$e_I < \varepsilon_I$ \OR $i\geq N_{max}$}
+    \STATE $V=V_i$
+    \STATE $T =$ \textbf{solveT}($V,T^0$)
+    \RETURN $(V,T)$
+  \end{algorithmic}
+\end{algorithm}
+
 \subsubsection{Picard}
+\algsetup{indent=2em}
+\begin{algorithm}[H]
+  \caption{Non-Linear Resolution using Picard}
+  \label{algo:et-picard}
+  \begin{algorithmic}
+    \REQUIRE $T^0$, $V^0$, $\varepsilon_I$, $\varepsilon_V$, $\varepsilon_T$,
+    $N_{max}$
+    \ENSURE $I$
+    \STATE $e_I=0, e_V=\infty, e_T=\infty$
+    \STATE $V=V^0,T=T^0$
+    \STATE $j=0$
+    \vspace{0.3cm}
+    \REPEAT
+      \STATE $i=0$
+      \STATE $V_i=V,T_i=T$
+      \REPEAT
+        \STATE $V_{i+1} =$ \textbf{solveV}($V_i,T$)
+        \STATE $e_V = \parallel V_{i+1}-V_i\parallel / \parallel V_i\parallel$
+        \IF{$I$}
+          \STATE $e_I =$ \textbf{updateBC}($V_{i+1},I$)
+        \ENDIF
+        \STATE $i = i+1$
+      \UNTIL{($e_I < \varepsilon_I$ \AND $e_V < \varepsilon_V$)
+        \OR $i\geq N_{max}$}
+      \STATE $V=V_i$
+      \STATE $i=0$
+      \REPEAT
+        \STATE $T_{i+1} =$ \textbf{solveT}($V,T_i$)
+        \STATE $e_T = \parallel T_{i+1}-T_i\parallel / \parallel T_i\parallel$
+        \STATE $i=i+1$
+      \UNTIL{$e_T < \varepsilon_T$ \OR $i\geq N_{max}$}
+      \STATE $T=T_i$
+      \STATE $j=j+1$
+      \UNTIL{($e_V < \varepsilon_V$ \AND $e_T < \varepsilon_T$)
+        \OR $j\geq N_{max}$}
+    \RETURN $(V,T)$
+  \end{algorithmic}
+\end{algorithm}
+
 \subsubsection{Newton}
+\algsetup{indent=2em}
+\begin{algorithm}[H]
+  \caption{Non-Linear Resolution using Newton}
+  \label{algo:et-newton}
+  \begin{algorithmic}
+    \REQUIRE $T^0$, $V^0$, $\varepsilon_I$, $\varepsilon_V$, $\varepsilon_T$,
+    $N_{max}$
+    \ENSURE $I$
+    \STATE $e_I=0$
+    \STATE $V_0=V^0$
+    \STATE $i=0$
+    \vspace{0.3cm}
+    \REPEAT
+      \STATE $V_{i+1} =$ \textbf{solveV}($V_i,T$)
+      \IF{$I$}
+        \STATE $e_I =$ \textbf{updateBC}($V_{i+1},I$)
+      \ENDIF
+      \STATE $i=i+1$
+    \UNTIL{$e_I < \varepsilon_I$ \OR $i\geq N_{Max}$}
+    \STATE $V=V_i$
+    \STATE $T =$ \textbf{solveT}($V,T^0$)
+    \STATE $i=0$
+    \REPEAT
+    \STATE \textbf{solveNewton}($V,T,\varepsilon_V,\varepsilon_T$)
+      \IF{$I$}
+        \STATE $e_I =$ \textbf{updateBC}($V_{i+1},I$)
+      \ENDIF
+      \STATE $i=i+1$
+    \UNTIL{$e_I < \varepsilon_I$ \OR $i\geq N_{max}$}
+    \RETURN $(V,T)$
+  \end{algorithmic}
+\end{algorithm}
