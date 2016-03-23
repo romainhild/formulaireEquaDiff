@@ -23,7 +23,7 @@ linking $\bB$ to $\bH$ and $\bD$ to $\bE$ from material properties.
   \bB = \mu \bH, \quad \bD = \varepsilon \bE, \quad \bj = \bj_s + \sigma \bE
 \end{equation}
 where $\mu$ is the magnetic permeability, $\varepsilon$ the electric permitivity
-and $\bj_s$ the current source density. \\
+, $\bj_s$ the current source density and $\sigma$ the electric conductivity. \\
 
 The Gauss's magnetic law in (\ref{eq:gauss_magnetic_law}) leads to the existence
 of a vectorial magnetic potential $\bA$
@@ -242,7 +242,7 @@ From Maxwell-Ampère equation (\ref{eq:maxwell-ampere}) in
 \begin{equation}
   \label{eq:maxwell-ampere-reg}
   \nabla \times \left( \frac{1}{\mu} \nabla \times \bA \right)
-  = \bj_s + \sigma \bE + \epsilon \frac{\partial \bE}{\partial t}
+  = \bj_s + \sigma \bE + \varepsilon \frac{\partial \bE}{\partial t}
 \end{equation}
 And from Faraday's law in (\ref{eq:static-potential}), we have :
 \begin{equation}
@@ -255,7 +255,7 @@ Combining (\ref{eq:maxwell-ampere-reg}) and (\ref{eq:faraday-reg}), we deduce
 \begin{equation}
   \label{eq:time-potential}
   \nabla \times \left( \frac{1}{\mu} \nabla \times \bA \right)
-  + \epsilon \frac{\partial^2 \bA}{\partial t^2}
+  + \varepsilon \frac{\partial^2 \bA}{\partial t^2}
   + \sigma \frac{\partial \bA}{\partial t}
   = \bj_s
 \end{equation}
@@ -272,30 +272,30 @@ We can then deduce the time harmonic equation
 \begin{equation}
   \label{eq:time-harmonic}
   \nabla \times \left( \frac{1}{\mu} \nabla \times \bA \right)
-  + (\sigma i \omega - \epsilon \omega^2) \bA = \bj_s
+  + (\sigma i \omega - \varepsilon \omega^2) \bA = \bj_s
 \end{equation}
 
 Our operator for magnetostatic equation (\ref{eq:static-potential}) can then be
 "regularized" adding to it a multiple of magnetic potential $\bA$, mimicking the
-last term $(\sigma i \omega - \epsilon\omega^2) \bA$ of (\ref{eq:time-harmonic})
+last term $(\sigma i \omega - \varepsilon\omega^2) \bA$ of (\ref{eq:time-harmonic})
 \begin{equation}
   \label{eq:regular-static-potential}
-  \nabla \times \left( \frac{1}{\mu} \nabla \times \bA_{\epsilon} \right)
-  + \alpha \bA_{\epsilon} = \bj
+  \nabla \times \left( \frac{1}{\mu} \nabla \times \bA_{\varepsilon} \right)
+  + \alpha \bA_{\varepsilon} = \bj
 \end{equation}
-The solution $\bA_{\epsilon}$ of the regularized problem
+The solution $\bA_{\varepsilon}$ of the regularized problem
 (\ref{eq:regular-static-potential}) converges to the solution $\bA$ of the
-initial problem (\ref{eq:static-potential}) for $\epsilon \longrightarrow 0$,
+initial problem (\ref{eq:static-potential}) for $\varepsilon \longrightarrow 0$,
 and we can show that
 \begin{equation}
   \label{eq:bounds-reg}
-  \parallel \bA_{\epsilon} \parallel_{L_2}
-  \leqslant \frac{1}{\epsilon} \parallel \bj \parallel_{L_2}
+  \parallel \bA_{\varepsilon} \parallel_{L_2}
+  \leqslant \frac{1}{\varepsilon} \parallel \bj \parallel_{L_2}
   \quad
   \text{and}
   \quad
   \exists c ~\text{such that}
-  ~\parallel \bA - \bA_{\epsilon} \parallel_{H_{curl}}
+  ~\parallel \bA - \bA_{\varepsilon} \parallel_{H_{curl}}
   \leqslant c \parallel \bj \parallel_{L_2}
 \end{equation}
 
