@@ -1,1 +1,94 @@
 \section{Electro-Thermal}
+From (\ref{eq:faraday}), in steady case, we know that there exist a scalar
+potential $V$ such that $\bE = -\nabla V$.\\
+Furthermore, the Ohm's law tells us that the current density $\bj$ is
+proportional to the electric field $\bE$:
+\begin{equation*}
+  \bj = \sigma\bE
+\end{equation*}
+where $\sigma$ is the electrical conductivity of the material.\\
+Finally, the charge conservation principle
+\begin{equation*}
+  \frac{\partial\rho}{\partial t} + \nabla\cdot\bj = 0
+\end{equation*}
+where $\rho$ is the charge density, gives, in the steady case, the equation:
+\begin{equation}
+  \nabla\cdot(-\sigma\nabla V) = 0
+\end{equation}
+
+The heat variation can be obtain in two ways:
+\begin{equation*}
+  \delta Q = C_p\rho_Q\frac{\partial T}{\partial t}
+\end{equation*}
+where $C_p$ and $\rho_Q$ are respectively the specific heat capacity and the
+mass density of the material.\\
+It can also reads from the heat flux density $\bj_Q$ and the eventual internal
+sources of heat $P$
+\begin{equation*}
+  \delta Q = \nabla\cdot\bj_Q + P
+\end{equation*}
+The Fourier's law defines $\bj_Q$ as $-k\nabla T$ where $k$ is the thermal
+conductivity of the material. The internal source of heat is the Joule effect,
+we then have $P=\bj\cdot\bE=\sigma\nabla V\cdot\nabla V$.\\
+In the steady case, this gives us:
+\begin{equation}
+  \nabla\cdot(k\nabla T) = \sigma\nabla V\cdot\nabla V
+\end{equation}
+
+The electrical and thermal conductivity of the materials depend both on the
+temperature. This leads to a non-linearity in the coupled electro-thermal model.
+
+The current circulation is imposed as a difference of potential $V_D$ between
+current input and output:
+\begin{itemize}
+\item
+  $V=0$ on $\Gamma_{V_{in}}$
+\item
+  $V=V_D$ on $\Gamma_{V_{out}}$
+\end{itemize}
+The air and the cooling water surrounding the magnet are considered as
+electrically insulating:
+\begin{itemize}
+\item
+  $-\sigma(T)\nabla V\cdot\bn = 0$
+  on $\partial\Omega\setminus(\Gamma_{V_{in}}\cup\Gamma_{V_{out}})$
+\end{itemize}
+The thermal flux $\bj_Q\cdot\bn$ is non-zero only on the cooled surfaces
+$\Gamma_c$. The thermal exchange between the conductor and the cooling water is
+governed by a convection phenomenon. The amount of heat exchanged depends on a
+heat tranfer coefficient $h$ and defines the thermal flux on cooled regions as
+$\bj_{Q} \cdot \mathbf{n} = h(T - T_0)$. The heat transfer coefficient is
+determined from the thermal conductivity $k(T)$, the hydraulic diameter $D_h$
+and the Nusselt number $Nu$ commonly used in heat transfer considerations.
+\begin{equation}
+  h = \frac{k(T) Nu}{D_h}
+\end{equation}
+This gives:
+\begin{itemize}
+\item
+  $-k(T)\nabla T\cdot\bn = h(T-T_0)$ on $\Gamma_c$
+\item
+  $-k(T)\nabla T\cdot\bn = 0$ on $\partial\Omega\setminus\Gamma_c$
+\end{itemize}
+
+Then, the equations to solve are:
+\begin{empheq}[left=\empheqlbrace]{alignat=2}
+  \nabla\cdot(-\sigma(T)\nabla V) &= 0 && \quad \text{ in } \Omega \\
+  \nabla\cdot(k(T)\nabla T) &= \sigma(T)\nabla V \cdot \nabla V
+  && \quad \text{ in } \Omega \\
+  V &= 0 && \quad \text{ on } \Gamma_{V_{in}} \\
+  v &= V_D && \quad \text{ on } \Gamma_{V_{out}} \\
+  -\sigma(T)\nabla V\cdot\bn &= 0 && \quad \text{ on }
+  \partial\Omega\setminus(\Gamma_{V_{in}}\cup\Gamma_{V_{out}}) \\
+  -k(T)\nabla T\cdot\bn &= h(T-T_0) && \quad \text{ on } \Gamma_c \\
+  -k(T)\nabla T\cdot\bn &= 0 && \quad\text{ on } \partial\Omega\setminus\Gamma_c
+\end{empheq}
+
+\subsection{Variational formulation}
+\subsubsection{Standard formulation}
+\subsubsection{Hybrid formulation}
+
+\subsection{Resolution strategy}
+\subsubsection{Linear}
+\subsubsection{Picard}
+\subsubsection{Newton}
