@@ -37,21 +37,24 @@ In the steady case, this gives us:
 
 The electrical and thermal conductivity of the materials depend both on the
 temperature. This leads to a non-linearity in the coupled electro-thermal model.
+\\
+
+We will use the following notations:
+$\partial\Omega=\Gamma_{in}\cup\Gamma_{out}\cup\Gamma_e=\Gamma_c\cup\Gamma_t$.\\
 
 The current circulation is imposed as a difference of potential $V_D$ between
 current input and output as two Dirichlet conditions:
 \begin{itemize}
 \item
-  $V=0$ on $\Gamma_{V_{in}}$
+  $V=0$ on $\Gamma_{in}$
 \item
-  $V=V_D$ on $\Gamma_{V_{out}}$
+  $V=V_D$ on $\Gamma_{out}$
 \end{itemize}
 The air and the cooling water surrounding the magnet are considered as
 electrically insulating, thus the Neumann condition:
 \begin{itemize}
 \item
-  $-\sigma(T)\nabla V\cdot\bn = 0$
-  on $\partial\Omega\setminus(\Gamma_{V_{in}}\cup\Gamma_{V_{out}})$
+  $-\sigma(T)\nabla V\cdot\bn = 0$ on $\Gamma_e$
 \end{itemize}
 The thermal flux $\bj_Q\cdot\bn$ is non-zero only on the cooled surfaces
 $\Gamma_c$. The thermal exchange between the conductor and the cooling water is
@@ -68,7 +71,7 @@ This gives the following Robin and Neumann conditions:
 \item
   $-k(T)\nabla T\cdot\bn = h(T-T_0)$ on $\Gamma_c$
 \item
-  $-k(T)\nabla T\cdot\bn = 0$ on $\partial\Omega\setminus\Gamma_c$
+  $-k(T)\nabla T\cdot\bn = 0$ on $\Gamma_t$
 \end{itemize}
 
 Then, the equations to solve are:
@@ -78,14 +81,14 @@ Then, the equations to solve are:
     && \quad \text{ in } \Omega \label{eq:electro} \\
     \nabla\cdot(k(T)\nabla T) &= \sigma(T)\nabla V \cdot \nabla V
     && \quad \text{ in } \Omega  \label{eq:thermo} \\
-    V &= 0 && \quad \text{ on } \Gamma_{V_{in}} \label{eq:electrobc1} \\
-    v &= V_D && \quad \text{ on } \Gamma_{V_{out}} \label{eq:electrobc2} \\
-    -\sigma(T)\nabla V\cdot\bn &= 0 && \quad \text{ on } \partial\Omega\setminus
-    (\Gamma_{V_{in}}\cup\Gamma_{V_{out}}) \label{eq:electrobc3} \\
+    V &= 0 && \quad \text{ on } \Gamma_{in} \label{eq:electrobc1} \\
+    v &= V_D && \quad \text{ on } \Gamma_{out} \label{eq:electrobc2} \\
+    -\sigma(T)\nabla V\cdot\bn &= 0 && \quad \text{ on } \Gamma_e
+    \label{eq:electrobc3} \\
     -k(T)\nabla T\cdot\bn &= h(T-T_0)
     && \quad \text{ on } \Gamma_c \label{eq:thermobc1} \\
     -k(T)\nabla T\cdot\bn &= 0
-    && \quad\text{ on } \partial\Omega\setminus\Gamma_c \label{eq:thermobc2}
+    && \quad\text{ on } \Gamma_t \label{eq:thermobc2}
   \end{empheq}
 \end{subequations}
 
@@ -111,8 +114,7 @@ we need to find $V \in \{ v \in H^1(\Omega) \mid v = 0 \text{ on } \Gamma_{in}
   \int_\Omega \sigma\nabla V\cdot\nabla\varphi
   - \int_{\Gamma_{in}} \underbrace{\varphi}_{=0}\sigma\nabla V\cdot \bn
   - \int_{\Gamma_{out}} \underbrace{\varphi}_{=0}\sigma\nabla V\cdot \bn
-  - \int_{\partial\Omega\setminus(\Gamma_{in}\cup\Gamma_{out})}
-  \varphi\underbrace{\sigma\nabla V\cdot \bn}_{=0} = 0
+  - \int_{\Gamma_e} \varphi\underbrace{\sigma\nabla V\cdot \bn}_{=0} = 0
 \end{equation*}
 that is find $V \in \{ v \in H^1(\Omega) \mid v = 0 \text{ on } \Gamma_{in}
 \text{ and } v = V_D \text{ on } \Gamma_{out} \}$ such that:
