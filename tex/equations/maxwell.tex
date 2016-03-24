@@ -4,16 +4,18 @@ by currents, etablishing relations between the electric and magnetic fields
 (resp. $\bE$ and $\bH$), the electric and magnetic flux (resp. $\bD$ and $\bB$),
 the current density $\bj$ and the electric charge $\rho$. They are then
 essential in the study of high field magnets.
-\begin{alignat}{2}
-  \nabla \times \bE &= -\frac{\partial \bB}{\partial t}
-  &&\quad\text{(Faraday)} \label{eq:faraday} \\
-  \nabla \times \bH &= \bj +\frac{\partial \bD}{\partial t}
-  &&\quad\text{(Maxwell-Ampère)} \label{eq:maxwell-ampere} \\
-  \nabla \cdot \bB &= 0
-  &&\quad\text{(Gauss magnetic law)} \label{eq:gauss_magnetic_law} \\
-  \nabla \cdot \bD &= \rho
-  &&\quad\text{(Gauss electric law)} \label{eq:gauss_electric_law}
-\end{alignat}
+\begin{subequations}\label{eq:maxwells}
+  \begin{alignat}{2}
+    \nabla \times \bE &= -\frac{\partial \bB}{\partial t}
+    &&\quad\text{(Faraday)} \label{eq:faraday} \\
+    \nabla \times \bH &= \bj +\frac{\partial \bD}{\partial t}
+    &&\quad\text{(Maxwell-Ampère)} \label{eq:maxwell-ampere} \\
+    \nabla \cdot \bB &= 0
+    &&\quad\text{(Gauss magnetic law)} \label{eq:gauss_magnetic_law} \\
+    \nabla \cdot \bD &= \rho
+    &&\quad\text{(Gauss electric law)} \label{eq:gauss_electric_law}
+  \end{alignat}
+\end{subequations}
 In static case, the time derivatives are obviously not considered. \\
 
 These equations have to be completed with the following constitutive laws,
@@ -81,26 +83,30 @@ of the potential based full maxwell problem in frequency domain.
 The add of the Coulomb gauge (divergence-free condition) to the potential based
 magnetostatic problem (\ref{eq:static-potential}) is managed by a scalar
 Lagrange multiplier $p$, giving the following problem to solve
-\begin{alignat}{2}
-  \nabla \times \left( \frac{1}{\mu} \nabla \times \bA \right) + \nabla p
-  &= \bj &&\text{ on } \Omega\\
-  \nabla \cdot A &= 0 &&\text{ on } \Omega \\
-  \bA \times \bn &= \bA_D &&\text{ on } \partial \Omega \label{eq:saddle-bc} \\
-  p &= 0 &&\text{ on } \partial \Omega
-\end{alignat}
+\begin{subequations}\label{eq:saddle}
+  \begin{empheq}[left=\empheqlbrace]{alignat=2}
+    \nabla \times \left( \frac{1}{\mu} \nabla \times \bA \right) + \nabla p
+    &= \bj &&\text{ on } \Omega\\
+    \nabla \cdot A &= 0 &&\text{ on } \Omega \\
+    \bA \times \bn &= \bA_D &&\text{ on } \partial \Omega \label{eq:saddle-bc}\\
+    p &= 0 &&\text{ on } \partial \Omega
+  \end{empheq}
+\end{subequations}
 
 \subsubsection{Variational formulation}
 The variational formulation the consists in finding
 $(\bA,p)\in(X\subset H_{\mathrm{curl}}(\Omega) \times H^1_0(\Omega))$ such that
-\begin{alignat}{2}
-  \int_{\Omega}\frac{1}{\mu}(\nabla \times \bA) \cdot (\nabla \times \bv)
-  + \int_{\partial\Omega}\frac{1}{\mu}
-  (\nabla\times\bA)\cdot(\bv\times\mathbf{n})
-  + \int_{\Omega} \bv \cdot \nabla p &= \int_{\Omega} \bj \cdot \bv
-  &&\quad\forall \bv \in X \label{eq:vf-saddle-point-1} \\
-  \int_{\Omega} \bA \cdot \nabla q &= 0
-  &&\quad\forall q \in H^1_0(\Omega) \label{eq:vf-saddle-point-2}
-\end{alignat}
+\begin{subequations}\label{eq:vf-saddle-point}
+  \begin{alignat}{2}
+    \int_{\Omega}\frac{1}{\mu}(\nabla \times \bA) \cdot (\nabla \times \bv)
+    + \int_{\partial\Omega}\frac{1}{\mu}
+    (\nabla\times\bA)\cdot(\bv\times\mathbf{n})
+    + \int_{\Omega} \bv \cdot \nabla p &= \int_{\Omega} \bj \cdot \bv
+    &&\quad\forall \bv \in X \label{eq:vf-saddle-point-1} \\
+    \int_{\Omega} \bA \cdot \nabla q &= 0
+    &&\quad\forall q \in H^1_0(\Omega) \label{eq:vf-saddle-point-2}
+  \end{alignat}
+\end{subequations}
 
 The Dirichlet boundary condition (\ref{eq:saddle-bc}) on $\bA$ imposed on strong
 form vanishes the boundary term of (\ref{eq:vf-saddle-point-1}) and the
@@ -112,14 +118,16 @@ X = H_{\bA_D,\mathrm{curl}}(\Omega)
 \]
 The variational formulation then consists in finding
 $(\bA,p) \in ( H_{\bA_D,\mathrm{curl}}(\Omega) \times H^1_0(\Omega))$ such that
-\begin{alignat}{2}
-\int_{\Omega}\frac{1}{\mu}(\nabla \times \bA) \cdot (\nabla \times \bv)
-+ \int_{\partial \Omega}\frac{1}{\mu} (\nabla \times \bA) \cdot A_D
-+ \int_{\Omega} \bv \cdot \nabla p &= \int_{\Omega} \bj \cdot \bv
-&&\quad\forall \bv \in X \label{eq:vf-saddle-strong-1} \\
-\int_{\Omega} \bA \cdot \nabla q &= 0
-&&\quad\forall q \in H^1_0(\Omega) \nonumber%\label{eq:vf-saddle-strong-2}
-\end{alignat}
+\begin{subequations}\label{eq:vf-saddle-strong}
+  \begin{alignat}{2}
+    \int_{\Omega}\frac{1}{\mu}(\nabla \times \bA) \cdot (\nabla \times \bv)
+    + \int_{\partial \Omega}\frac{1}{\mu} (\nabla \times \bA) \cdot A_D
+    + \int_{\Omega} \bv \cdot \nabla p &= \int_{\Omega} \bj \cdot \bv
+    &&\quad\forall \bv \in X \label{eq:vf-saddle-strong-1} \\
+    \int_{\Omega} \bA \cdot \nabla q &= 0
+    &&\quad\forall q \in H^1_0(\Omega) \label{eq:vf-saddle-strong-2}
+  \end{alignat}
+\end{subequations}
 
 We can also impose (\ref{eq:saddle-bc}) on weak form, adding symetrization and
 penalisation terms and then avoiding to add condition in $X$ function space,
@@ -127,23 +135,25 @@ i.e. $X = H_{\mathrm{curl}}(\Omega)$. We denote $\gamma$ the penalisation
 coefficient, and $h_s$ the mesh size. The variational formulation then consists
 in finding $(\bA,p) \in ( H_{\mathrm{curl}}(\Omega) \times H^1_0(\Omega))$ such
 that
-\begin{alignat}{2}
-  \int_{\Omega}\frac{1}{\mu}(\nabla \times \bA) \cdot (\nabla \times \bv)
-  + \int_{\Omega} \bv \cdot \nabla p
-  +\int_{\partial\Omega}\frac{\gamma}{h_s}\frac{1}{\mu}
-  (\bv \times \bn) \cdot (\bA \times \bn)
-  &&& \nonumber \\
-  +\int_{\partial\Omega}\frac{1}{\mu}(\nabla\times\bA)\cdot(\bv\times\bn)
-  +\int_{\partial\Omega}\frac{1}{\mu}(\nabla\times\bv)\cdot(\bA\times\bn)
-  & = \int_{\Omega} \bj \cdot \bv
-  + \int_{\partial \Omega}\frac{1}{\mu} (\nabla \times \bv) \cdot \bA_D
-  &&\quad \forall \bv \in X \label{eq:vf-saddle-weak-1} \\
-  &   + \int_{\partial\Omega}\frac{\gamma}{h_s}
-  \frac{1}{\mu}(\bv\times\bn)\cdot \bA_D
-  && \nonumber \\
-  \int_{\Omega} \bA \cdot \nabla q &= 0
-  &&\quad\forall q \in H^1_0(\Omega) \nonumber%\label{eq:vf-saddle-weak-2}
-\end{alignat}
+\begin{subequations}\label{eq:vf-saddle-weak}
+  \begin{alignat}{2}
+    \int_{\Omega}\frac{1}{\mu}(\nabla \times \bA) \cdot (\nabla \times \bv)
+    + \int_{\Omega} \bv \cdot \nabla p
+    +\int_{\partial\Omega}\frac{\gamma}{h_s}\frac{1}{\mu}
+    (\bv \times \bn) \cdot (\bA \times \bn)
+    &&& \nonumber \\
+    +\int_{\partial\Omega}\frac{1}{\mu}(\nabla\times\bA)\cdot(\bv\times\bn)
+    +\int_{\partial\Omega}\frac{1}{\mu}(\nabla\times\bv)\cdot(\bA\times\bn)
+    & = \int_{\Omega} \bj \cdot \bv
+    + \int_{\partial \Omega}\frac{1}{\mu} (\nabla \times \bv) \cdot \bA_D
+    &&\quad \forall \bv \in X \label{eq:vf-saddle-weak-1} \\
+    &   + \int_{\partial\Omega}\frac{\gamma}{h_s}
+    \frac{1}{\mu}(\bv\times\bn)\cdot \bA_D
+    && \nonumber \\
+    \int_{\Omega} \bA \cdot \nabla q &= 0
+    &&\quad\forall q \in H^1_0(\Omega) \label{eq:vf-saddle-weak-2}
+  \end{alignat}
+\end{subequations}
 
 \subsubsection{Discretization}
 The vectorial magnetic potential $\bA$ is approximated using Nédélec finite
@@ -218,7 +228,7 @@ term $\bj$ to which symetrization and penalisation terms can be added
 \subsection{Regularized formulation}
 \label{sec:regul-maxwell}
 We consider here the Maxwell's equations
-(\ref{eq:faraday}-\ref{eq:gauss_electric_law}) given on their full formulation
+\eqref{eq:maxwells} given on their full formulation
 (with time derivatives), which can describe all electromagnetic phenomena.
 
 The time dependency of these equation can be removed using a time Fourier

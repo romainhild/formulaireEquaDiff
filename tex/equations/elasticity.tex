@@ -47,11 +47,13 @@ which allow us to rewrite (\ref{eq:hooke}) as:
 For simplicity, we'll omit the dependance in the follwing.\\
 
 We need to complete the system with some boundary conditions:
-\begin{empheq}[left=\empheqlbrace]{alignat=2}
-  \bu &= \bu_D &&\quad \text{ on } \partial\Omega_D \label{eq:ela-bc-1} \\
-  \bbar{\sigma}\cdot\bn &= \bg
-  &&\quad \text{ on }\partial\Omega_P \label{eq-ela-bc-2}
-\end{empheq}
+\begin{subequations}\label{eq:ela-bc}
+  \begin{empheq}[left=\empheqlbrace]{alignat=2}
+    \bu &= \bu_D &&\quad \text{ on } \partial\Omega_D \label{eq:ela-bc-1} \\
+    \bbar{\sigma}\cdot\bn &= \bg
+    &&\quad \text{ on }\partial\Omega_P \label{eq-ela-bc-2}
+  \end{empheq}
+\end{subequations}
 where $\partial\Omega=\partial\Omega_D\cup\partial\Omega_P$.
 
 \subsection{Variational formulation}

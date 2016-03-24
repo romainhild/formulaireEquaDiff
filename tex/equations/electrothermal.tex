@@ -39,7 +39,7 @@ The electrical and thermal conductivity of the materials depend both on the
 temperature. This leads to a non-linearity in the coupled electro-thermal model.
 
 The current circulation is imposed as a difference of potential $V_D$ between
-current input and output:
+current input and output as two Dirichlet conditions:
 \begin{itemize}
 \item
   $V=0$ on $\Gamma_{V_{in}}$
@@ -47,7 +47,7 @@ current input and output:
   $V=V_D$ on $\Gamma_{V_{out}}$
 \end{itemize}
 The air and the cooling water surrounding the magnet are considered as
-electrically insulating:
+electrically insulating, thus the Neumann condition:
 \begin{itemize}
 \item
   $-\sigma(T)\nabla V\cdot\bn = 0$
@@ -63,7 +63,7 @@ and the Nusselt number $Nu$ commonly used in heat transfer considerations.
 \begin{equation}
   h = \frac{k(T) Nu}{D_h}
 \end{equation}
-This gives:
+This gives the following Robin and Neumann conditions:
 \begin{itemize}
 \item
   $-k(T)\nabla T\cdot\bn = h(T-T_0)$ on $\Gamma_c$
@@ -72,28 +72,65 @@ This gives:
 \end{itemize}
 
 Then, the equations to solve are:
-\begin{empheq}[left=\empheqlbrace]{alignat=2}
-  \nabla\cdot(-\sigma(T)\nabla V) &= 0 && \quad \text{ in } \Omega \\
-  \nabla\cdot(k(T)\nabla T) &= \sigma(T)\nabla V \cdot \nabla V
-  && \quad \text{ in } \Omega \\
-  V &= 0 && \quad \text{ on } \Gamma_{V_{in}} \\
-  v &= V_D && \quad \text{ on } \Gamma_{V_{out}} \\
-  -\sigma(T)\nabla V\cdot\bn &= 0 && \quad \text{ on }
-  \partial\Omega\setminus(\Gamma_{V_{in}}\cup\Gamma_{V_{out}}) \\
-  -k(T)\nabla T\cdot\bn &= h(T-T_0) && \quad \text{ on } \Gamma_c \\
-  -k(T)\nabla T\cdot\bn &= 0 && \quad\text{ on } \partial\Omega\setminus\Gamma_c
-\end{empheq}
+\begin{subequations}\label{eq:et}
+  \begin{empheq}[left=\empheqlbrace]{alignat=2}
+    \nabla\cdot(-\sigma(T)\nabla V) &= 0
+    && \quad \text{ in } \Omega \label{eq:electro} \\
+    \nabla\cdot(k(T)\nabla T) &= \sigma(T)\nabla V \cdot \nabla V
+    && \quad \text{ in } \Omega  \label{eq:thermo} \\
+    V &= 0 && \quad \text{ on } \Gamma_{V_{in}} \label{eq:electrobc1} \\
+    v &= V_D && \quad \text{ on } \Gamma_{V_{out}} \label{eq:electrobc2} \\
+    -\sigma(T)\nabla V\cdot\bn &= 0 && \quad \text{ on } \partial\Omega\setminus
+    (\Gamma_{V_{in}}\cup\Gamma_{V_{out}}) \label{eq:electrobc3} \\
+    -k(T)\nabla T\cdot\bn &= h(T-T_0)
+    && \quad \text{ on } \Gamma_c \label{eq:thermobc1} \\
+    -k(T)\nabla T\cdot\bn &= 0
+    && \quad\text{ on } \partial\Omega\setminus\Gamma_c \label{eq:thermobc2}
+  \end{empheq}
+\end{subequations}
 
-\subsection{Variational formulation}
-\subsubsection{Standard formulation}
-\subsubsection{Hybrid formulation}
+\subsection{Standard formulation}
+\subsubsection{Variational formulation for electro}
+The variational formulation of (\ref{eq:electro}) reads:
+\begin{alignat}{2}
+  \int_\Omega \nabla\cdot(-\sigma\nabla V)\cdot\varphi &= 0
+  && \quad \forall\varphi\in X
+\end{alignat}
+Which gives:
+\begin{alignat}{2}
+  \int_\Omega \sigma\nabla V\cdot\nabla\varphi
+  - \int_{\partial\Omega} \varphi\sigma\nabla V\cdot \bn &= 0
+  && \quad \forall\varphi\in X
+\end{alignat}
+Using strong Dirichlet conditions for (\ref{eq:electrobc1}-\ref{eq:electrobc2}),
+we need to find $V \in \{ v \in H^1(\Omega) \mid v = 0 \text{ on } \Gamma_{in}
+\text{ and } v = V_D \text{ on } \Gamma_{out} \}$ such that $\forall \varphi
+\in \{ v \in H^1(\Omega) \mid v = 0 \text{ on } \Gamma_{in} \text{ and } v = 0
+\text{ on } \Gamma_{out} \}$:
+\begin{equation*}
+  \int_\Omega \sigma\nabla V\cdot\nabla\varphi
+  - \int_{\Gamma_{in}} \underbrace{\varphi}_{=0}\sigma\nabla V\cdot \bn
+  - \int_{\Gamma_{out}} \underbrace{\varphi}_{=0}\sigma\nabla V\cdot \bn
+  - \int_{\partial\Omega\setminus(\Gamma_{in}\cup\Gamma_{out})}
+  \varphi\underbrace{\sigma\nabla V\cdot \bn}_{=0} = 0
+\end{equation*}
+that is find $V \in \{ v \in H^1(\Omega) \mid v = 0 \text{ on } \Gamma_{in}
+\text{ and } v = V_D \text{ on } \Gamma_{out} \}$ such that:
+\begin{alignat}{2}
+  \label{eq:vf-electrostrong}
+  \int_\Omega \sigma\nabla V\cdot\nabla\varphi &= 0
+  && \quad \forall \varphi \in \{ v \in H^1(\Omega) \mid v = 0 \text{ on }
+  \Gamma_{in} \text{ and } v = 0 \text{ on } \Gamma_{out} \}
+\end{alignat}
 
-\subsection{Resolution strategy}
+\subsubsection{Variational formulation for thermo}
+
+\subsubsection{Resolution strategy}
 The current is imposed by a difference of potential, but it would be more
 consistent with the experiment to give a current density as a target and
 update the Dirichlet boundary conditions to approach the current.\\
-In the following, this option is
-\subsubsection{Linear}
+In the following, we use this option if $I$ is given.
+
 \algsetup{indent=2em}
 \begin{algorithm}[H]
   \caption{Linear Resolution}
@@ -118,7 +155,6 @@ In the following, this option is
   \end{algorithmic}
 \end{algorithm}
 
-\subsubsection{Picard}
 \algsetup{indent=2em}
 \begin{algorithm}[H]
   \caption{Non-Linear Resolution using Picard}
@@ -158,7 +194,6 @@ In the following, this option is
   \end{algorithmic}
 \end{algorithm}
 
-\subsubsection{Newton}
 \algsetup{indent=2em}
 \begin{algorithm}[H]
   \caption{Non-Linear Resolution using Newton}
@@ -191,3 +226,5 @@ In the following, this option is
     \RETURN $(V,T)$
   \end{algorithmic}
 \end{algorithm}
+
+\subsection{Hybrid formulation}
